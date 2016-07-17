@@ -5,9 +5,6 @@ closest <- matrix(NA, nrow(birds), 3)
 colnames(closest) <- c("ID", "Distance", "Speed")
 for(i in 1:nrow(birds))
 {
-  
-  i<-67
-  
   #extract x and y coordinates of vessels
   temp <- vms[, match(c("lat", "long"), colnames(vms))]
   
@@ -17,11 +14,8 @@ for(i in 1:nrow(birds))
   temp <- temp ^ 2
   temp <- sqrt(rowSums(temp))
   
-  tempRow<-which(temp == min(temp))
-  
-  
-  
-  print(tempRow)
+  #In case this returns more than one boat with the same distance - use the first one
+  tempRow<-head(which(temp == min(temp)),1)
     
   #extract closest vessel
   closest[i,1] <- vms$ID[tempRow]
